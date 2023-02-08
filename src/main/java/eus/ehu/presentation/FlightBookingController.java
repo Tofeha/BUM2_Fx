@@ -22,10 +22,12 @@ import javafx.scene.input.MouseEvent;
 
 public class FlightBookingController {
 
+
+    @FXML
+    private TextField ticketinput;
     @FXML
     private Label output;
 
-    // create conFlightInfo JAvaFX observable list
     private ObservableList<ConcreteFlight> conFlightInfo = FXCollections.observableArrayList();
 
     @FXML
@@ -108,7 +110,12 @@ public class FlightBookingController {
      */
     @FXML
     void searchConFlightsButton(ActionEvent event) {
-
+        String flightType = "First";
+        if (economyRB.isSelected()) {
+            flightType = "Economy";
+        } else if (businessRB.isSelected()) {
+            flightType = "Business";
+        }
         conFlightInfo.clear();
 
         String chosenDateString = monthCombo.getValue() + " " +
@@ -120,10 +127,11 @@ public class FlightBookingController {
         try {
             Date chosenDate = format.parse(chosenDateString);
             List<ConcreteFlight> foundConFlights = businessLogic.
-                    getMatchingConFlights(departureInput.getText(),
-                            arrivalInput.getText(), chosenDate);
+                    getMatchingConFlightsNew(departureInput.getText(),
+                            arrivalInput.getText(), chosenDate, flightType, Integer.parseInt(ticketinput.getText()));
             for (ConcreteFlight v : foundConFlights)
                 conFlightInfo.add(v);
+
             if (foundConFlights.isEmpty())
                 searchResultAnswer.setText("No matching flights found. " +
                         "Please change your options");
@@ -145,12 +153,13 @@ public class FlightBookingController {
     @FXML
     void selectConFlight(ActionEvent event) {
         int remaining = 0;
+        int ticket = Integer.parseInt(ticketinput.getText());
         if (firstRB.isSelected()) {
-            remaining = businessLogic.bookSeat(selectedConFlight, "First");
+            remaining = businessLogic.bookSeatNew(selectedConFlight, "First", ticket);
         } else if (businessRB.isSelected()) {
-            remaining = businessLogic.bookSeat(selectedConFlight, "Business");
+            remaining = businessLogic.bookSeatNew(selectedConFlight, "Business", ticket);
         } else if (economyRB.isSelected()) {
-            remaining = businessLogic.bookSeat(selectedConFlight, "Economy");
+            remaining = businessLogic.bookSeatNew(selectedConFlight, "Economy", ticket);
         }
         if (remaining < 0)
             bookSelectedConFlightButton.setText("Error: This flight had no "

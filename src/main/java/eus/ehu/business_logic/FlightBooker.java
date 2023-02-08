@@ -23,8 +23,8 @@ public interface FlightBooker {
 	 * @param date				The date of the concrete flight
 	 * @return					A List of concrete flights that meet the restrictions
 	 */
-	public List<ConcreteFlight> getMatchingConFlights(String departureCity,
-													  String arrivalCity, Date date);
+	public List<ConcreteFlight> getMatchingConFlightsNew(String departureCity,
+													  String arrivalCity, Date date, String fare, int quantity);
 
 
 	/**
@@ -35,6 +35,6 @@ public interface FlightBooker {
 	 * @return				The number of remaining free seats for this fare after
 	 * 						the booking, or -1 if no available seat to book
 	 */
-	public int bookSeat(ConcreteFlight conFli, String fare);
+	public int bookSeatNew(ConcreteFlight conFli, String fare, int seats);
 
 }

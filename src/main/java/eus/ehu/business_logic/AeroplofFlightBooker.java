@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 /**
  * AeroplofFlightBooker
  *
@@ -75,20 +74,23 @@ public class AeroplofFlightBooker implements FlightBooker {
 	 * @param intendedDate             introduced/selected by user
 	 * @return                         List of concrete flights
 	 */
-	public List<ConcreteFlight> getMatchingConFlights(String intendedDepartureCity,
-			String intendedArrivalCity, Date intendedDate) {
+	public List<ConcreteFlight> getMatchingConFlightsNew(String intendedDepartureCity,
+			String intendedArrivalCity, Date intendedDate, String fare, int numSeats) {
 
 		List<ConcreteFlight> matchingConFlights = new ArrayList<ConcreteFlight>();
 
 		for (Flight fli : availableFlights) {
+
 			if (fli.getArrivalCity().equals(intendedArrivalCity) &&
 					fli.getDepartureCity().equals(intendedDepartureCity))
-				matchingConFlights.addAll(fli.getConcreteFlights(intendedDate));
+
+				matchingConFlights.addAll(fli.getConcreteFlightsNew(intendedDate, fare, numSeats));
 		}
 
 		return matchingConFlights;
 
 	}
+
 
 	/**
 	 * @param conFli		The concrete flight in which a free seat is to be booked
@@ -96,8 +98,8 @@ public class AeroplofFlightBooker implements FlightBooker {
 	 * @return				The number of remaining free seats for this fare after
 	 * 						the booking, or -1 if no available seat to book
 	 */
-	public int bookSeat(ConcreteFlight conFli, String fare) {
-		return conFli.allocateSeat(fare, 1);
+	public int bookSeatNew(ConcreteFlight conFli, String fare, int numSeats) {
+		return conFli.allocateSeat(fare, numSeats);
 	}
 
 }

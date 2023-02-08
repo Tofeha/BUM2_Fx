@@ -78,6 +78,32 @@ public class Flight {
 		return lInDate;
 	}
 
+	public ArrayList<ConcreteFlight> getConcreteFlightsNew(Date date, String fare, int quantity ) {
+		ArrayList<ConcreteFlight> lInDate = new ArrayList<ConcreteFlight>();
+		for (ConcreteFlight cfl : concreteFlights) {
+			if (date.equals(cfl.getDate()))
+				switch(fare)
+				{
+					case "Economy":
+					if(cfl.getFreeEconomySeatNo()>=quantity){
+						lInDate.add(cfl);
+					}
+					break;
+					case "Business":
+					if(cfl.getFreeBusinessSeatNo()>=quantity){
+						lInDate.add(cfl);
+					}
+					break;
+					//case "First Class":
+					default:
+					if(cfl.getFreeFirstSeatNo()>=quantity){
+						lInDate.add(cfl);
+					}
+				}
+		}
+		return lInDate;
+	}
+
 
 	public void setConcreteFlights(List<ConcreteFlight> concreteFlights) {
 		this.concreteFlights = concreteFlights;
