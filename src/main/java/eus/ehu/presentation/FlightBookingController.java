@@ -31,7 +31,7 @@ public class FlightBookingController {
     private ObservableList<ConcreteFlight> conFlightInfo = FXCollections.observableArrayList();
 
     @FXML
-    private ListView<ConcreteFlight> conFlightList;
+    private ComboBox<ConcreteFlight> ComboBox;
     ;
 
     @FXML
@@ -84,7 +84,7 @@ public class FlightBookingController {
         final int JULY = 6;
         monthCombo.getSelectionModel().select(JULY);
 
-        conFlightList.setItems(conFlightInfo);
+        ComboBox.setItems(conFlightInfo);
         bookSelectedConFlightButton.setDisable(true);
 
         /**
@@ -93,7 +93,7 @@ public class FlightBookingController {
          * enabled and displays an invitation to book it
          */
 
-        conFlightList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        ComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 selectedConFlight = newValue;
                 bookSelectedConFlightButton.setDisable(false);
